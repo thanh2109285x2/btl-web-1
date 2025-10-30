@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D</title>
+    <link rel="stylesheet" href="product.css"> </head>
+</head>
+<body>
+    <header>
+        <a href="menu.html">← Trở về Menu</a>
+        <h1>Chi Tiết Sản Phẩm</h1>
+    </header>
+
+    <main id="product-detail">
+        <!-- Nội dung chi tiết sản phẩm sẽ được chèn vào đây bởi JavaScript -->
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const detailContainer = document.getElementById('product-detail');
+            // Lấy các tham số từ URL
+            const urlParams = new URLSearchParams(window.location.search);
+
+            const name = urlParams.get('name');
+            const price = urlParams.get('price');
+            const image = urlParams.get('image');
+            const description = urlParams.get('description');
+            
+            // Chuyển đổi giá về định dạng tiếng Việt
+            const formattedPrice = price ? parseInt(price).toLocaleString('vi-VN') + '₫' : 'N/A';
+            
+            // Hiển thị nội dung phụ thuộc vào sản phẩm mình chọn
+            detailContainer.innerHTML = `
+                <div class="product-content-wrapper">
+                    <div class="product-image-container">
+                        <img src="${image || ''}" alt="${name}" class="product-image">
+                    </div>
+                    <div class="product-details-container">
+                        <h2 class="product-name">${name || 'Not available'}</h2>
+                        <p class="product-price"><strong>Price:</strong> ${formattedPrice}</p>
+                        <p class="product-description"><strong>Description:</strong> ${description || 'Không có mô tả.'}</p>
+                        <p class="product-ingredient">Ingredients: ${urlParams.get('ingredient') || 'Không có thành phần.'}</p>
+                        <button class="add-to-cart-btn" onclick="addToCart('${name}', ${price})">Thêm vào giỏ hàng</button>
+                    </div>
+                </div>
+            `;
+
+            window.addToCart = (itemName, itemPrice) => {
+                let cart = JSON.parse(localStorage.getItem("cart")) || [];
+                const existingItem = cart.find(i => i.name === itemName);
+
+                if (!existingItem) {
+                    cart.push({ name: itemName, price: itemPrice, quantity: 1 });
+                    localStorage.setItem("cart", JSON.stringify(cart));
+                    alert(`Đã thêm ${itemName} vào giỏ hàng!`);
+                } else {
+                    alert(`${itemName} đã có trong giỏ hàng!`);
+                }
+            };
+        });
+    </script>
+</body>
+</html>

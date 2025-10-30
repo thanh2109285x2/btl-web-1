@@ -54,6 +54,7 @@ body {
 }
 
 .menu-list {
+  list-style-type: none;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -100,6 +101,13 @@ body {
 .menu-item {
   position: relative;
 }
+
+.menu-item a.item-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+
 
 .tick-btn {
   position: absolute;
