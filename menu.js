@@ -83,15 +83,17 @@ itemLinks.forEach(link => {
         const price = link.dataset.price;
         const image = link.dataset.image;
         const description = link.dataset.description;
+        const ingredient = link.dataset.ingredient;
 
         // Mã hóa các giá trị để chúng có thể được truyền qua URL an toàn
         const encodedName = encodeURIComponent(name);
         const encodedPrice = encodeURIComponent(price);
         const encodedImage = encodeURIComponent(image);
         const encodedDescription = encodeURIComponent(description);
+        const encodedIngredient = encodeURIComponent(ingredient);
 
         // Xây dựng URL của trang chi tiết sản phẩm (Giả sử bạn có file tên là "detail.html")
-        const detailPageUrl = `product.html?name=${encodedName}&price=${encodedPrice}&image=${encodedImage}&description=${encodedDescription}`;
+        const detailPageUrl = `product.html?name=${encodedName}&price=${encodedPrice}&image=${encodedImage}&description=${encodedDescription}&ingredient=${encodedIngredient}`;
 
         // Chuyển hướng đến trang chi tiết
         window.location.href = detailPageUrl;

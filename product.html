@@ -40,6 +40,7 @@
                         <h2 class="product-name">${name || 'Not available'}</h2>
                         <p class="product-price"><strong>Price:</strong> ${formattedPrice}</p>
                         <p class="product-description"><strong>Description:</strong> ${description || 'Không có mô tả.'}</p>
+                        <p class="product-ingredient">Ingredients: ${urlParams.get('ingredient') || 'Không có thành phần.'}</p>
                         <button class="add-to-cart-btn" onclick="addToCart('${name}', ${price})">Thêm vào giỏ hàng</button>
                     </div>
                 </div>
