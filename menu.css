@@ -101,6 +101,13 @@ body {
   position: relative;
 }
 
+.menu-item a.item-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+
+
 .tick-btn {
   position: absolute;
   top: 10px;

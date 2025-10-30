@@ -25,7 +25,8 @@ function updateTotal() {
 updateTotal();
 
 tickButtons.forEach(button => {
-  button.addEventListener("click", () => {
+  button.addEventListener("click", (event) => {
+    event.stopPropagation();    // Ngăn chặn sự kiện click lan truyền lên thẻ chuyển đến trang mới
     const item = button.closest(".menu-item");
     const name = item.dataset.name;
     const price = parseInt(item.dataset.price);
@@ -71,5 +72,32 @@ checkoutBtn.addEventListener("click", () => {
   updateTotal();
 });
 
+const itemLinks = document.querySelectorAll(".menu-item .item-link");
+itemLinks.forEach(link => {
+    link.addEventListener("click", function(event) {
+        // NGĂN CHẶN hành vi mặc định của thẻ <a> (ngăn chặn chuyển trang ngay lập tức)
+        event.preventDefault();
 
+        // Lấy thông tin từ data-* của thẻ <a>
+        const name = link.dataset.name;
+        const price = link.dataset.price;
+        const image = link.dataset.image;
+        const description = link.dataset.description;
+
+        // Mã hóa các giá trị để chúng có thể được truyền qua URL an toàn
+        const encodedName = encodeURIComponent(name);
+        const encodedPrice = encodeURIComponent(price);
+        const encodedImage = encodeURIComponent(image);
+        const encodedDescription = encodeURIComponent(description);
+
+        // Xây dựng URL của trang chi tiết sản phẩm (Giả sử bạn có file tên là "detail.html")
+        const detailPageUrl = `product.html?name=${encodedName}&price=${encodedPrice}&image=${encodedImage}&description=${encodedDescription}`;
+
+        // Chuyển hướng đến trang chi tiết
+        window.location.href = detailPageUrl;
+
+        // Cập nhật tiêu đề trang
+        document.title = name;
+    });
+});
 
