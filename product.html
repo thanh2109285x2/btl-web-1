@@ -2,14 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>D</title>
-    <link rel="stylesheet" href="product.css"> </head>
+    <meta name="author" content="nhom: thanh sieu hoang dat">
+    <meta name="description" content="Coffee web">
+    <title>coffee web</title>
+    <!-- thu vien swiper -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <link rel="stylesheet" href="product.css">
 </head>
 <body>
     <header>
         <a href="menu.html">← Trở về Menu</a>
-        <h1>Chi Tiết Sản Phẩm</h1>
     </header>
 
     <main id="product-detail">
@@ -32,32 +35,26 @@
             
             // Hiển thị nội dung phụ thuộc vào sản phẩm mình chọn
             detailContainer.innerHTML = `
-                <div class="product-content-wrapper">
-                    <div class="product-image-container">
-                        <img src="${image || ''}" alt="${name}" class="product-image">
+                <div class="content">
+                    <div class="content_img">
+                        <img src="${image || 'default.png'}" alt="${name}" class="image">
                     </div>
-                    <div class="product-details-container">
-                        <h2 class="product-name">${name || 'Not available'}</h2>
-                        <p class="product-price"><strong>Price:</strong> ${formattedPrice}</p>
-                        <p class="product-description"><strong>Description:</strong> ${description || 'Không có mô tả.'}</p>
-                        <p class="product-ingredient">Ingredients: ${urlParams.get('ingredient') || 'Không có thành phần.'}</p>
-                        <button class="add-to-cart-btn" onclick="addToCart('${name}', ${price})">Thêm vào giỏ hàng</button>
+                    <div class="description">
+                        <p class="name">${name || 'Unknown Product'}</p>
+                        <p class="title">${description || 'No description available.'}</p>
+                        <p class="cost">Price: ${formattedPrice}</p>
+                        <form action="#">
+                            <label for="quantity">Quantity: </label>
+                            <input type="number" id="quantity" min="1" max="5" class="quantity"><br>
+                            <button 
+                                type="button" 
+                                class="button"
+                                onclick="orderNow('${name}', ${price})">
+                                Order now
+                            </button>
+                        </form>
                     </div>
-                </div>
-            `;
-
-            window.addToCart = (itemName, itemPrice) => {
-                let cart = JSON.parse(localStorage.getItem("cart")) || [];
-                const existingItem = cart.find(i => i.name === itemName);
-
-                if (!existingItem) {
-                    cart.push({ name: itemName, price: itemPrice, quantity: 1 });
-                    localStorage.setItem("cart", JSON.stringify(cart));
-                    alert(`Đã thêm ${itemName} vào giỏ hàng!`);
-                } else {
-                    alert(`${itemName} đã có trong giỏ hàng!`);
-                }
-            };
+                </div>`;
         });
     </script>
 </body>
