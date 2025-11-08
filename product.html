@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="nhom: thanh sieu hoang dat">
+    <meta name="description" content="Coffee web">
+    <title>coffee web</title>
+    <!-- thu vien swiper -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <link rel="stylesheet" href="css/product.css">
+</head>
+<body>
+    <header>
+        <a href="menu.html">← Back to Menu</a>
+    </header>
+
+    <main id="product-detail">
+        <!-- Nội dung chi tiết sản phẩm sẽ được chèn vào đây bởi JavaScript -->
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const detailContainer = document.getElementById('product-detail');
+            // Lấy các tham số từ URL
+            const urlParams = new URLSearchParams(window.location.search);
+
+            const name = urlParams.get('name');
+            const price = urlParams.get('price');
+            const image = urlParams.get('image');
+            const description = urlParams.get('description');
+            
+            // Chuyển đổi giá về định dạng tiếng Việt
+            const formattedPrice = price ? parseInt(price).toLocaleString('vi-VN') + '₫' : 'N/A';
+            
+            // Hiển thị nội dung phụ thuộc vào sản phẩm mình chọn
+            detailContainer.innerHTML = `
+                <div class="content">
+                    <div class="content_img">
+                        <img src="${image || 'default.png'}" alt="${name}" class="image">
+                    </div>
+                    <div class="description">
+                        <p class="name">${name || 'Unknown Product'}</p>
+                        <p class="title">${description || 'No description available.'}</p>
+                        <p class="cost">Price: ${formattedPrice}</p>
+                        <form action="#">
+                            <label for="quantity">Quantity: </label>
+                            <input type="number" id="quantity" min="1" max="5" class="quantity"><br>
+                            <button 
+                                type="button" 
+                                class="button"
+                                onclick='orderNow(${JSON.stringify(name)}, ${price})'>
+                                Order now
+                            </button>
+                        </form>
+                    </div>
+                </div>`;
+        });
+
+        // Read quantity, validate, and redirect to menu.html with params
+        function orderNow(name, price) {
+            const qtyInput = document.getElementById('quantity');
+            let qty = 1;
+            if (qtyInput) {
+                const parsed = parseInt(qtyInput.value, 10);
+                if (!isNaN(parsed)) qty = parsed;
+            }
+            // enforce bounds
+            if (qty < 1) qty = 1;
+            if (qty > 5) qty = 5;
+
+            const params = new URLSearchParams({
+                name: name || '',
+                price: price != null ? price : '',
+                quantity: String(qty)
+            });
+
+            // Redirect to menu.html with query parameters
+            window.location.href = 'menu.html?' + params.toString();
+        }
+    </script>
+</body>
+</html>
